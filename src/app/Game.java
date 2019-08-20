@@ -30,10 +30,20 @@ public class Game implements ActionListener{
         //Add button to panel.
         gamePanel.add(clickButton);
 
-        gameFrame.;
+        //Add top label
+        JLabel topLabel = new JLabel("Score: ");
+        JPanel topPanel = new JPanel();
+        topPanel.add(topLabel);
+        gameFrame.getContentPane().add(BorderLayout.NORTH, topPanel);
 
+        //Add label with show score.
+        gameScore = new JLabel(String.valueOf(counter));
+        JPanel gameScorePanel = new JPanel();
+        gameScorePanel.add(gameScore);
+        gameFrame.getContentPane().add(BorderLayout.CENTER, gameScorePanel);
+
+        //Place button on the buttom of game window.
         gameFrame.getContentPane().add(BorderLayout.SOUTH, gamePanel);
-
 
         //Display the window.
         gameFrame.setVisible(true);
@@ -42,5 +52,6 @@ public class Game implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
         counter++;
         clickButton.setText("click");
+        gameScore.setText(String.valueOf(counter));
     }
 }
