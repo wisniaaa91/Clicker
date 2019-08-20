@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SplashDemo",
+            "request": "launch",
+            "mainClass": "app.SplashDemo",
+            "projectName": "Clicker",
+            "console": "externalTerminal"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "app.App",
+            "projectName": "Clicker",
+            "console": "externalTerminal"
+        }
+    ]
+}
