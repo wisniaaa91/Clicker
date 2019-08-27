@@ -7,7 +7,7 @@ import java.io.*;
 
 import javax.swing.*;
 
-public class Game implements ActionListener{
+public class Game{
     
     JFrame gameFrame;
     int counter = 0;
@@ -15,6 +15,7 @@ public class Game implements ActionListener{
     JButton resetButton;
     JLabel gameScore;
     int score;
+    JPanel gameScorePanel;
 
     public void init(){
         //Create and set up the window.
@@ -25,10 +26,21 @@ public class Game implements ActionListener{
         //Create a buttons.
         clickButton = new JButton("CLICK HERE TO GET SCORE");
         resetButton = new JButton("Reset Game");
-        clickButton.setSize(300, 30);
+
+        //Set size for buttons
+        clickButton.setSize(300, 100);
+        resetButton.setSize(100, 300);
+        
+        //Add panel for Click button.
+        JPanel clickButtonPanel = new JPanel();
+        clickButtonPanel.add(clickButton);
+        
+        //Add panel for Reset button
+        JPanel resetButtonPanel = new JPanel();
+        resetButtonPanel.add(resetButton);
 
         //Add actionListener to button.
-        clickButton.addActionListener(this);
+        clickButton.addActionListener(new ClickGameActionListener());
         resetButton.addActionListener(new ResetGameActionListener());
 
         //Add top label
@@ -42,13 +54,13 @@ public class Game implements ActionListener{
 
         //Add label with show score.
         gameScore = new JLabel(String.valueOf(counter));
-        JPanel gameScorePanel = new JPanel();
+        gameScorePanel = new JPanel();
         gameScorePanel.add(gameScore);
         gameFrame.getContentPane().add(BorderLayout.CENTER, gameScorePanel);
 
         //Place button on the buttom of game window.
-        gameFrame.getContentPane().add(BorderLayout.SOUTH, clickButton);
-        gameFrame.getContentPane().add(BorderLayout.WEST, resetButton);
+        gameFrame.getContentPane().add(BorderLayout.SOUTH, clickButtonPanel);
+        gameFrame.getContentPane().add(BorderLayout.WEST, resetButtonPanel);
 
         //Display the window.
         gameFrame.setVisible(true);
@@ -72,28 +84,43 @@ public class Game implements ActionListener{
             File loadFile = new File("save.bin");
             FileReader fileReader = new FileReader(loadFile);
             counter = fileReader.read();
+            fileReader.close();
 
         }catch(IOException ex){
             ex.printStackTrace();
         }
     }
-
+    //Reset score method. 
     public void resetGame(){
         counter = 0;
         gameScore.setText(String.valueOf(counter));
         saveGame();
     }
+    //Restar button listener
     public class ResetGameActionListener implements ActionListener{
         public void actionPerformed(ActionEvent ev){
             resetGame();
         }
     }
 
-    public void actionPerformed(ActionEvent arg0) {
-        counter++;
-        clickButton.setText("click");
-        gameScore.setText(String.valueOf(counter));
-        score = counter;
-        saveGame();
+    //CLick button listener
+    public class ClickGameActionListener implements ActionListener{
+        public void actionPerformed(ActionEvent arg0) {
+            counter++;
+            clickButton.setText("click");
+            changeColor();
+            gameScore.setText(String.valueOf(counter));
+            score = counter;
+            saveGame();
+        }
     }
+
+    public void changeColor(){
+        int r = (int) (Math.random() * 255);
+        int b = (int) (Math.random() * 255);
+        int g = (int) (Math.random() * 255);
+
+        gameScorePanel.setBackground(new Color(r,b,g));
+    }
+    
 }
